@@ -61,14 +61,17 @@ namespace Metete.Api.Features.Eventos.Queries
                     Id = query.Id,
                     NombreEvento = evento.Nombre,
                     NombreTipoDeporte = evento.TipoDeporte.Nombre,
+                    IdTipoDeporte = evento.TipoDeporte.Id,
                     NombreCentroDeporte = evento.OtroCentroDeporte ? evento.NombreCentroDeporte! : evento.CentroDeporte.Nombre,
                     DireccionCentroDeporte = evento.OtroCentroDeporte ? evento.DireccionCentroDeporte! : string.Join(", ", evento.CentroDeporte.Direccion, evento.CentroDeporte.Comuna.Nombre),
                     FechaEvento = DateTime.SpecifyKind(evento.FechaEvento, DateTimeKind.Utc),
                     NombreCategoriaGenero = evento.CategoriaGenero.Nombre,
+                    IdCategoriaGenero = evento.CategoriaGenero.Id,
                     NumJugadores = evento.NumJugadores,
                     Duracion = evento.Duracion,
                     PrecioPorPersona = evento.PrecioPorPersona,
                     NombreMetodoPago = evento.MetodoPago.Nombre,
+                    IdMetodoPago = evento.MetodoPago.Id,
                     NombreCreador = evento.UsuarioCreador.Nombre,
                     Latitud = evento.OtroCentroDeporte ? evento.LatitudCentroDeporte!.Value : evento.CentroDeporte.Latitud,
                     Longitud = evento.OtroCentroDeporte ? evento.LongitudCentroDeporte!.Value : evento.CentroDeporte.Longitud,
@@ -87,14 +90,17 @@ namespace Metete.Api.Features.Eventos.Queries
             public int Id { get; set; }
             public string NombreEvento { get; set; } = null!;
             public string NombreTipoDeporte { get; set; } = null!;
+            public int IdTipoDeporte { get; set; }
             public string NombreCentroDeporte { get; set; } = null!;
             public string DireccionCentroDeporte { get; set; } = null!;
             public DateTime FechaEvento { get; set; }
             public string NombreCategoriaGenero { get; set; } = null!;
+            public int IdCategoriaGenero { get; set; }
             public int NumJugadores { get; set; }
             public int Duracion { get; set; }
             public decimal PrecioPorPersona { get; set; }
             public string NombreMetodoPago { get; set; } = null!;
+            public int IdMetodoPago { get; set; }
             public string NombreCreador { get; set; } = null!;
             public decimal Latitud { get; set; }
             public decimal Longitud { get; set; }
