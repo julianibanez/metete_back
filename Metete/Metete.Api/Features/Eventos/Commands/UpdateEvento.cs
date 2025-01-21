@@ -25,7 +25,7 @@ namespace Metete.Api.Features.Eventos.Commands
 
             public int Duracion { get; set; }
 
-            public int IdCentroDeporte { get; set; }
+            public int? IdCentroDeporte { get; set; }
 
             public int NumJugadores { get; set; }
 
