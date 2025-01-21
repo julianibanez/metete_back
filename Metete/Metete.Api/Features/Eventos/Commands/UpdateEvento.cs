@@ -19,10 +19,6 @@ namespace Metete.Api.Features.Eventos.Commands
 
             public DateTime FechaEvento { get; set; }
 
-            public int DiaDeLaSemana { get; set; }
-
-            public string HoraEvento { get; set; } = null!;
-
             public int Duracion { get; set; }
 
             public int? IdCentroDeporte { get; set; }
