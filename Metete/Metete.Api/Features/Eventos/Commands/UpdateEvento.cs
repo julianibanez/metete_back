@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
 using Metete.Api.Data;
+using Metete.Api.Enums;
+using Metete.Api.Features.Eventos.Queries;
 using Metete.Api.Infraestructure.Exceptions;
 using Metete.Api.Models;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace Metete.Api.Features.Eventos.Commands
 {
@@ -63,6 +66,36 @@ namespace Metete.Api.Features.Eventos.Commands
                 _context.Eventos.Update(evento);
 
                 await _context.SaveChangesAsync(cancellationToken);
+
+                // Obtener participantes desde la base de datos directamente
+                var participantes = await _context.UsuarioEventos
+                    .Where(p => p.IdEvento == command.Id)
+                    .ToListAsync(cancellationToken);
+
+
+                // Notifica al organizador
+                TipoNotificacion? tipoNotificacion = await _context.TipoNotificaciones.FirstOrDefaultAsync(x =>
+                    x.Id == (int)TipoNotificacionEnum.EventoModificado);
+
+                if (tipoNotificacion != null)
+                {
+                    for(int i = 0; i < participantes.Count; i++)
+                    {
+                        evento.Notificaciones.Add(new Notificacion
+                        {
+                            IdUsuario = participantes[i].IdUsuario,
+                            IdTipoNotificacion = tipoNotificacion.Id,
+                            Titulo = tipoNotificacion.Titulo,
+                            Mensaje = tipoNotificacion.Mensaje,
+                            IdEvento = evento.Id,
+                            IdEstadoNotificacion = (int)EstadoNotificacion.Pendiente,
+                            FechaCreacion = DateTime.UtcNow
+                        });
+                    }
+                    
+                }
+
+
 
                 return Unit.Value;
             }

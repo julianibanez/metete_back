@@ -9,6 +9,7 @@
         JugadorAbandonaEvento = 5,
         NuevoMesajeChatEvento = 6,
         OnDemand = 7,
-        EventoDentroPreferenciasHorario = 8
+        EventoDentroPreferenciasHorario = 8,
+        EventoModificado = 9
     }
 }
