@@ -61,11 +61,6 @@ namespace Metete.Api.Features.Eventos.Commands
                     throw new EntityNotFoundException(nameof(Evento), command.Id);
                 }
 
-                _mapper.Map(command, evento);
-
-                _context.Eventos.Update(evento);
-
-                await _context.SaveChangesAsync(cancellationToken);
 
                 // Obtener participantes desde la base de datos directamente
                 var participantes = await _context.UsuarioEventos
@@ -79,7 +74,7 @@ namespace Metete.Api.Features.Eventos.Commands
 
                 if (tipoNotificacion != null)
                 {
-                    for(int i = 0; i < participantes.Count; i++)
+                    for (int i = 0; i < participantes.Count; i++)
                     {
                         evento.Notificaciones.Add(new Notificacion
                         {
@@ -92,9 +87,16 @@ namespace Metete.Api.Features.Eventos.Commands
                             FechaCreacion = DateTime.UtcNow
                         });
                     }
-                    
                 }
 
+
+                _mapper.Map(command, evento);
+
+                _context.Eventos.Update(evento);
+
+                await _context.SaveChangesAsync(cancellationToken);
+
+             
 
 
                 return Unit.Value;
